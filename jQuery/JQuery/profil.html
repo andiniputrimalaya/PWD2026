@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Profil</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(160deg, #ffe3f1, #fff5fa 60%); min-height: 100vh; margin: 0; padding: 30px 15px; color: #4a1d34; }
+        .container { width: 480px; max-width: 100%; margin: auto; background: white; padding: 30px 25px; border-radius: 24px; box-shadow: 0 10px 30px rgba(214, 51, 132, 0.18); }
+        h2 { text-align: center; margin: 0; color: #c2185b; }
+        .subjudul { text-align: center; font-size: 14px; color: #9c6a83; margin: 6px 0 22px; }
+        /* Kartu profil */
+        #kartuProfil { padding: 25px 20px; background: linear-gradient(145deg, #fff0f7, #ffd6ea); border-radius: 18px; text-align: center; transition: box-shadow 0.3s, transform 0.3s; }
+        .sorot { box-shadow: 0 8px 22px rgba(233, 30, 140, 0.3); transform: translateY(-3px); }
+        .avatar { width: 90px; height: 90px; margin: 0 auto 12px; border-radius: 50%; background: linear-gradient(135deg, #ff6fb1, #c2185b); color: white; font-size: 30px; font-weight: bold; line-height: 90px; box-shadow: 0 6px 14px rgba(194, 24, 91, 0.4); }
+        #kartuProfil h3 { margin: 5px 0; font-size: 24px; }
+        #jabatanProfil { margin: 4px 0 12px; color: #c2185b; }
+        .info { margin: 3px 0; font-size: 14px; color: #7a4a62; }
+        #daftarSkill { margin-top: 14px; }
+        #infoSkill { font-size: 13px; color: #9c6a83; margin-bottom: 0; }
+        .skill { display: inline-block; padding: 5px 12px; margin: 3px; background: white; color: #c2185b; border-radius: 20px; font-size: 13px; font-weight: bold; cursor: pointer; }
+        .skill.aktif { background: #e91e8c; color: white; }
+        /* Tombol */
+        .baris-tombol { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 18px; }
+        button { flex: 1; padding: 10px 14px; border: 2px solid #e91e8c; border-radius: 25px; background: #e91e8c; color: white; font-size: 13px; font-weight: bold; white-space: nowrap; cursor: pointer; }
+        button:hover { background: #c2185b; border-color: #c2185b; }
+        button.outline { background: white; color: #e91e8c; }
+        button.outline:hover { background: #ffe0ee; border-color: #e91e8c; }
+        /* Form */
+        .area-form { display: none; margin-top: 18px; padding: 18px; background: #fff7fb; border: 1px solid #ffd0e6; border-radius: 16px; }
+        .area-form button { width: 100%; margin-top: 16px; }
+        label { display: block; margin-top: 12px; font-size: 14px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px 12px; margin-top: 5px; box-sizing: border-box; border: 1px solid #f3b6d3; border-radius: 10px; font-family: Arial, sans-serif; }
+        input:focus, textarea:focus { outline: none; border-color: #e91e8c; box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.15); }
+        .error { color: #d32f2f; font-size: 13px; margin: 5px 0 0; display: none; }
+        #kartuKonfirmasi { display: none; margin-top: 20px; padding: 15px 18px; background: #fff0f7; border-left: 5px solid #e91e8c; border-radius: 12px; }
+        #kartuKonfirmasi h3 { margin-top: 0; color: #c2185b; }
+        #kartuKonfirmasi p { margin: 5px 0; font-size: 14px; }
+        /* Menu */
+        #nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        #nav a { padding: 10px 26px; border: 2px solid #e91e8c; border-radius: 25px; background: white; color: #e91e8c; font-weight: bold; text-decoration: none; }
+        #nav a.aktif { background: #e91e8c; color: white; }
+    </style>
+</head>
+<body>
+    <!-- Menu -->
+    <div id="nav">
+        <a href="profil.html" class="aktif">Profil</a>
+        <a href="belanja.html">Belanja</a>
+    </div>
+    <div class="container">
+        <!-- Data profil -->
+        <div id="kartuProfil">
+            <div class="avatar" id="inisial">AP</div>
+            <h3 id="namaProfil">Andi Pratama</h3>
+            <p id="jabatanProfil">Front-End Developer</p>
+            <p class="info"><span id="kotaProfil">Jakarta</span>, Indonesia</p>
+            <p class="info" id="emailProfil">andi@example.com</p>
+            <div id="daftarSkill">
+                <span class="skill">HTML5</span>
+                <span class="skill">CSS3</span>
+                <span class="skill">JavaScript</span>
+                <span class="skill">jQuery</span>
+            </div>
+            <p id="infoSkill">Klik skill untuk menandainya.</p>
+        </div>
+        <!-- Tombol manipulasi DOM & efek -->
+        <div class="baris-tombol">
+            <button id="btnGantiNama">Ganti Nama</button>
+            <button id="btnTambahSkill">Tambah Skill</button>
+            <button id="btnReset" class="outline">Reset</button>
+        </div>
+        <!-- Tombol profil & pesan -->
+        <div class="baris-tombol">
+            <button id="btnUbah">Ubah Profil</button>
+            <button id="btnPesan" class="outline">Tinggalkan Pesan</button>
+        </div>
+        <!-- Form ubah profil -->
+        <div id="areaUbah" class="area-form">
+            <form id="formUbah">
+                <label>Nama Baru</label>
+                <input type="text" id="uNama">
+                <p id="errUNama" class="error">Nama minimal 3 karakter!</p>
+                <label>Jabatan Baru</label>
+                <input type="text" id="uJabatan">
+                <p id="errUJabatan" class="error">Jabatan wajib diisi!</p>
+                <label>Email Baru</label>
+                <input type="text" id="uEmail">
+                <p id="errUEmail" class="error">Email harus memiliki @ dan .</p>
+                <label>Kota Baru</label>
+                <input type="text" id="uKota">
+                <p id="errUKota" class="error">Kota wajib diisi!</p>
+                <button type="submit">Simpan Perubahan</button>
+            </form>
+        </div>
+        <!-- Form pesan (validasi real-time) -->
+        <div id="areaPesan" class="area-form">
+            <form id="formPesan">
+                <label>Nama Anda</label>
+                <input type="text" id="vNama" placeholder="Minimal 3 karakter">
+                <p id="errNama" class="error">Nama minimal 3 karakter!</p>
+                <label>Email Anda</label>
+                <input type="text" id="vEmail" placeholder="contoh@domain.com">
+                <p id="errEmail" class="error">Email harus memiliki @ dan .</p>
+                <label>Pesan</label>
+                <textarea id="vPesan" rows="3" placeholder="Minimal 10 karakter"></textarea>
+                <p id="errPesan" class="error">Pesan minimal 10 karakter!</p>
+                <button type="submit">Kirim</button>
+            </form>
+        </div>
+        <!-- Tempat kartu konfirmasi -->
+        <div id="kartuKonfirmasi"></div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            // Efek hover pada kartu profil
+            $("#kartuProfil").hover(
+                function() { $(this).addClass("sorot"); },
+                function() { $(this).removeClass("sorot"); }
+            );
+            // Klik skill untuk menandai
+            function tandaiSkill() {
+                $(this).toggleClass("aktif");
+                $("#infoSkill").text($(".skill.aktif").length + " skill ditandai");
+            }
+            $(".skill").click(tandaiSkill);
+            // Ganti nama
+            $("#btnGantiNama").click(function() {
+                $("#namaProfil").text("Rina Wijaya").css("color", "#2a5298");
+                $("#inisial").text("RW");
+            });
+            // Tambah skill satu per satu
+            var skillBaru = ["PHP", "MySQL", "Bootstrap", "Git"];
+            var urutan = 0;
+            $("#btnTambahSkill").click(function() {
+                if (urutan < skillBaru.length) {
+                    $("<span>")
+                        .addClass("skill baru")
+                        .text(skillBaru[urutan])
+                        .click(tandaiSkill)
+                        .hide()
+                        .appendTo("#daftarSkill")
+                        .fadeIn(400);
+                    urutan++;
+                } else {
+                    alert("Semua skill sudah ditambahkan!");
+                }
+            });
+            // Reset ke kondisi awal
+            $("#btnReset").click(function() {
+                $("#inisial").text("AP");
+                $("#namaProfil").text("Andi Pratama").css("color", "");
+                $("#jabatanProfil").text("Front-End Developer");
+                $("#emailProfil").text("andi@example.com");
+                $("#kotaProfil").text("Jakarta");
+                $(".baru").remove();
+                $(".skill").removeClass("aktif");
+                $("#infoSkill").text("Klik skill untuk menandainya.");
+                urutan = 0;
+            });
+            // Ubah profil: buka form berisi data saat ini
+            $("#btnUbah").click(function() {
+                $("#areaPesan").slideUp();
+                $("#uNama").val($("#namaProfil").text());
+                $("#uJabatan").val($("#jabatanProfil").text());
+                $("#uEmail").val($("#emailProfil").text());
+                $("#uKota").val($("#kotaProfil").text());
+                $("#areaUbah").slideToggle();
+            });
+            // Buka / tutup form pesan
+            $("#btnPesan").click(function() {
+                $("#areaUbah").slideUp();
+                $("#areaPesan").slideToggle();
+            });
+            // Simpan perubahan profil
+            $("#formUbah").submit(function(event) {
+                event.preventDefault();
+                var nama = $("#uNama").val().trim();
+                var jabatan = $("#uJabatan").val().trim();
+                var email = $("#uEmail").val().trim();
+                var kota = $("#uKota").val().trim();
+                var valid = true;
+                $("#errUNama, #errUJabatan, #errUEmail, #errUKota").hide();
+                if (nama.length < 3) {
+                    $("#errUNama").show();
+                    valid = false;
+                }
+                if (jabatan === "") {
+                    $("#errUJabatan").show();
+                    valid = false;
+                }
+                if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+                    $("#errUEmail").show();
+                    valid = false;
+                }
+                if (kota === "") {
+                    $("#errUKota").show();
+                    valid = false;
+                }
+                if (valid) {
+                    $("#emailProfil").text(email);
+                    $("#kotaProfil").text(kota);
+                    // Inisial = 2 huruf pertama nama
+                    $("#inisial").text(nama.substring(0, 2).toUpperCase());
+                    $("#namaProfil").text(nama).css("color", "#c2185b");
+                    $("#jabatanProfil").text(jabatan);
+                    $("#areaUbah").slideUp();
+                }
+            });
+            // Validasi form pesan (dipakai saat mengetik dan saat submit)
+            function cekNama() {
+                if ($("#vNama").val().trim().length < 3) {
+                    $("#errNama").show();
+                    return false;
+                }
+                $("#errNama").hide();
+                return true;
+            }
+            function cekEmail() {
+                var email = $("#vEmail").val().trim();
+                if (email.indexOf("@") === -1 || email.indexOf(".") === -1) {
+                    $("#errEmail").show();
+                    return false;
+                }
+                $("#errEmail").hide();
+                return true;
+            }
+            function cekPesan() {
+                if ($("#vPesan").val().trim().length < 10) {
+                    $("#errPesan").show();
+                    return false;
+                }
+                $("#errPesan").hide();
+                return true;
+            }
+            $("#vNama").on("input", cekNama);
+            $("#vEmail").on("input", cekEmail);
+            $("#vPesan").on("input", cekPesan);
+            $("#formPesan").submit(function(event) {
+                event.preventDefault();
+                // Bendera validasi
+                var valid = true;
+                if (!cekNama()) valid = false;
+                if (!cekEmail()) valid = false;
+                if (!cekPesan()) valid = false;
+                if (valid) {
+                    // Membuat kartu konfirmasi
+                    var kartu = $("<div>");
+                    $("<h3>").text("Pesan Terkirim!").appendTo(kartu);
+                    $("<p>").text("Nama: " + $("#vNama").val().trim()).appendTo(kartu);
+                    $("<p>").text("Email: " + $("#vEmail").val().trim()).appendTo(kartu);
+                    $("<p>").text("Pesan: " + $("#vPesan").val().trim()).appendTo(kartu);
+                    // Kartu hilang otomatis setelah 4 detik
+                    $("#kartuKonfirmasi").empty().append(kartu).fadeIn().delay(4000).fadeOut();
+                    $("#formPesan").trigger("reset");
+                    $("#areaPesan").slideUp();
+                }
+            });
+        });
+    </script>
+</body>
+</html>

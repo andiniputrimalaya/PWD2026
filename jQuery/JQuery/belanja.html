@@ -1,0 +1,280 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Belanja</title>
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+    <style>
+        body { font-family: Arial, sans-serif; background: linear-gradient(160deg, #ffe3f1, #fff5fa 60%); min-height: 100vh; margin: 0; padding: 30px 15px; color: #4a1d34; }
+        .container { width: 760px; max-width: 100%; margin: auto; }
+        h1 { text-align: center; color: #c2185b; margin: 0 0 25px; }
+        h2 { margin: 0 0 12px; color: #c2185b; font-size: 20px; }
+        .kolom { display: flex; gap: 20px; flex-wrap: wrap; align-items: flex-start; }
+        .kartu { background: white; padding: 22px; border-radius: 20px; box-shadow: 0 8px 24px rgba(214, 51, 132, 0.15); margin-bottom: 20px; }
+        .produk-area { flex: 1.3; min-width: 280px; }
+        .keranjang-area { flex: 1; min-width: 260px; }
+        /* Produk */
+        .produk { display: flex; justify-content: space-between; align-items: center; padding: 12px 14px; margin-bottom: 10px; background: #fff0f7; border-radius: 14px; }
+        .produk b { display: block; }
+        .produk small { color: #9c6a83; }
+        /* Keranjang */
+        .item { display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px dashed #ffd0e6; font-size: 14px; }
+        .qty button { width: 26px; height: 26px; padding: 0; margin: 0 4px; }
+        .kosong { text-align: center; color: #9c6a83; font-size: 14px; }
+        #cartTotal { font-size: 18px; font-weight: bold; text-align: right; margin-top: 14px; }
+        #cartTotal del { color: #9c6a83; font-size: 14px; font-weight: normal; display: block; }
+        #cartTotal strong { color: #c2185b; }
+        .badge { display: none; margin-top: 8px; padding: 6px 12px; background: #e8f5e9; color: #2e7d32; border-radius: 10px; font-size: 13px; }
+        button { padding: 8px 14px; border: 2px solid #e91e8c; border-radius: 25px; background: #e91e8c; color: white; font-weight: bold; cursor: pointer; }
+        button:hover { background: #c2185b; border-color: #c2185b; }
+        button.outline { background: white; color: #e91e8c; }
+        button.outline:hover { background: #ffe0ee; }
+        #btnCheckout { width: 100%; margin-top: 14px; padding: 11px; }
+        /* Riwayat */
+        .riwayat-item { padding: 10px 12px; margin-bottom: 8px; background: #fff0f7; border-left: 5px solid #e91e8c; border-radius: 10px; font-size: 14px; }
+        /* Modal */
+        #modal { display: none; position: fixed; inset: 0; background: rgba(74, 29, 52, 0.55); z-index: 10; padding: 20px; overflow-y: auto; }
+        .modal-isi { width: 420px; max-width: 100%; margin: 40px auto; background: white; padding: 25px; border-radius: 20px; }
+        label { display: block; margin-top: 12px; font-size: 14px; font-weight: bold; }
+        input, textarea { width: 100%; padding: 10px 12px; margin-top: 5px; box-sizing: border-box; border: 1px solid #f3b6d3; border-radius: 10px; font-family: Arial, sans-serif; }
+        input:focus, textarea:focus { outline: none; border-color: #e91e8c; box-shadow: 0 0 0 3px rgba(233, 30, 140, 0.15); }
+        .error { color: #d32f2f; font-size: 13px; margin: 5px 0 0; display: none; }
+        .baris-tombol { display: flex; gap: 10px; margin-top: 18px; }
+        .baris-tombol button { flex: 1; }
+        #ringkasan { background: #fff0f7; padding: 10px 14px; border-radius: 10px; font-size: 14px; }
+        #notif { display: none; margin-bottom: 20px; padding: 14px 18px; background: #e8f5e9; color: #2e7d32; border-left: 5px solid #2e7d32; border-radius: 12px; }
+        /* Menu */
+        #nav { display: flex; justify-content: center; gap: 10px; margin-bottom: 25px; }
+        #nav a { padding: 10px 26px; border: 2px solid #e91e8c; border-radius: 25px; background: white; color: #e91e8c; font-weight: bold; text-decoration: none; }
+        #nav a.aktif { background: #e91e8c; color: white; }
+    </style>
+</head>
+<body>
+    <!-- Menu -->
+    <div id="nav">
+        <a href="profil.html">Profil</a>
+        <a href="belanja.html" class="aktif">Belanja</a>
+    </div>
+    <div class="container">
+        <h1>Keranjang Belanja</h1>
+        <div id="notif"></div>
+        <div class="kolom">
+            <!-- Daftar produk -->
+            <div class="kartu produk-area">
+                <h2>Daftar Produk</h2>
+                <div id="daftarProduk"></div>
+            </div>
+            <!-- Keranjang -->
+            <div class="kartu keranjang-area">
+                <h2>Keranjang</h2>
+                <div id="cartItems"></div>
+                <div id="cartTotal">Rp 0</div>
+                <div id="badgeDiskon" class="badge">Diskon 10% berlaku (belanja di atas Rp 100.000)</div>
+                <button id="btnCheckout">Checkout</button>
+            </div>
+        </div>
+        <!-- Riwayat (disimpan di localStorage) -->
+        <div class="kartu">
+            <h2>Riwayat Pembelian</h2>
+            <div id="daftarRiwayat"></div>
+            <button id="btnHapusRiwayat" class="outline">Hapus Riwayat</button>
+        </div>
+    </div>
+    <!-- Modal form data pembeli -->
+    <div id="modal">
+        <div class="modal-isi">
+            <h2>Data Pembeli</h2>
+            <div id="ringkasan"></div>
+            <form id="formPembeli">
+                <label>Nama</label>
+                <input type="text" id="pNama">
+                <p id="errNama" class="error"></p>
+                <label>Alamat</label>
+                <textarea id="pAlamat" rows="3"></textarea>
+                <p id="errAlamat" class="error"></p>
+                <label>No. HP</label>
+                <input type="text" id="pHp" placeholder="08xxxxxxxxxx">
+                <p id="errHp" class="error"></p>
+                <div class="baris-tombol">
+                    <button type="button" id="btnBatal" class="outline">Batal</button>
+                    <button type="submit">Bayar Sekarang</button>
+                </div>
+            </form>
+        </div>
+    </div>
+    <script>
+        $(document).ready(function() {
+            // Data produk
+            const produk = [
+                { id: 1, nama: "Kaos Polos", harga: 75000 },
+                { id: 2, nama: "Topi Baseball", harga: 45000 },
+                { id: 3, nama: "Tas Ransel", harga: 120000 },
+                { id: 4, nama: "Botol Minum", harga: 35000 },
+                { id: 5, nama: "Buku Catatan", harga: 28000 }
+            ];
+            // Isi keranjang
+            let cart = [];
+            // Format rupiah
+            function rupiah(angka) {
+                return "Rp " + angka.toLocaleString("id-ID");
+            }
+            // Jumlah seluruh barang di keranjang
+            function hitungQty() {
+                return cart.reduce((sum, item) => sum + item.qty, 0);
+            }
+            // Tambah produk ke keranjang
+            function tambahKeKeranjang(p) {
+                let ada = false;
+                for (let i = 0; i < cart.length; i++) {
+                    if (cart[i].id === p.id) {
+                        cart[i].qty++;
+                        ada = true;
+                    }
+                }
+                if (!ada) {
+                    cart.push({ id: p.id, nama: p.nama, harga: p.harga, qty: 1 });
+                }
+                updateCartUI();
+            }
+            // Tampilkan daftar produk
+            for (let i = 0; i < produk.length; i++) {
+                const p = produk[i];
+                const baris = $("<div>").addClass("produk");
+                const info = $("<div>");
+                $("<b>").text(p.nama).appendTo(info);
+                $("<small>").text(rupiah(p.harga)).appendTo(info);
+                baris.append(info);
+                $("<button>").text("Tambah").click(function() {
+                    tambahKeKeranjang(p);
+                }).appendTo(baris);
+                $("#daftarProduk").append(baris);
+            }
+            // Tampilan keranjang
+            function updateCartUI() {
+                $("#cartItems").empty();
+                if (cart.length === 0) {
+                    $("#cartItems").html('<p class="kosong">Keranjang masih kosong</p>');
+                }
+                for (let i = 0; i < cart.length; i++) {
+                    const item = cart[i];
+                    const baris = $("<div>").addClass("item");
+                    const qty = $("<span>").addClass("qty");
+                    $("<span>").text(item.nama + " (" + rupiah(item.harga) + ")").appendTo(baris);
+                    // Tombol kurang (hapus dari keranjang jika qty habis)
+                    $("<button>").text("-").click(function() {
+                        item.qty--;
+                        if (item.qty === 0) {
+                            cart.splice(i, 1);
+                        }
+                        updateCartUI();
+                    }).appendTo(qty);
+                    $("<b>").text(item.qty).appendTo(qty);
+                    // Tombol tambah
+                    $("<button>").text("+").click(function() {
+                        item.qty++;
+                        updateCartUI();
+                    }).appendTo(qty);
+                    baris.append(qty);
+                    $("#cartItems").append(baris);
+                }
+                // ----- Latihan 1: diskon 10% jika total > Rp 100.000 -----
+                let totalHarga = cart.reduce((sum, item) => sum + (item.harga * item.qty), 0);
+                $("#cartTotal").text(rupiah(totalHarga));
+                $("#badgeDiskon").hide();
+                if (totalHarga > 100000) {
+                    const diskon = totalHarga * 0.1;
+                    totalHarga -= diskon;
+                    $('#cartTotal').html(`
+                        <del>Rp ${(totalHarga + diskon).toLocaleString('id-ID')}</del>
+                        <strong>Rp ${totalHarga.toLocaleString('id-ID')}</strong>
+                    `);
+                    $("#badgeDiskon").show();
+                }
+                return totalHarga;
+            }
+            // ----- Latihan 2: simpan riwayat ke localStorage -----
+            function simpanRiwayat(total, qty) {
+                const riwayat = JSON.parse(localStorage.getItem('riwayat')) || [];
+                riwayat.push({ tanggal: new Date().toISOString(), total, qty });
+                localStorage.setItem('riwayat', JSON.stringify(riwayat));
+            }
+            // Tampilkan riwayat (yang terbaru di atas)
+            function tampilRiwayat() {
+                const riwayat = JSON.parse(localStorage.getItem("riwayat")) || [];
+                $("#daftarRiwayat").empty();
+                if (riwayat.length === 0) {
+                    $("#daftarRiwayat").html('<p class="kosong">Belum ada riwayat pembelian</p>');
+                }
+                for (let i = riwayat.length - 1; i >= 0; i--) {
+                    const r = riwayat[i];
+                    const tanggal = new Date(r.tanggal).toLocaleString("id-ID");
+                    $("<div>")
+                        .addClass("riwayat-item")
+                        .text(tanggal + " | " + r.qty + " barang | " + rupiah(r.total))
+                        .appendTo("#daftarRiwayat");
+                }
+            }
+            $("#btnHapusRiwayat").click(function() {
+                localStorage.removeItem("riwayat");
+                tampilRiwayat();
+            });
+            // ----- Latihan 3: modal form data pembeli -----
+            $("#btnCheckout").click(function() {
+                if (cart.length === 0) {
+                    alert("Keranjang masih kosong!");
+                    return;
+                }
+                $("#ringkasan").text(hitungQty() + " barang | Total bayar: " + rupiah(updateCartUI()));
+                $("#modal .error").hide();
+                $("#modal").fadeIn(200);
+            });
+            $("#btnBatal").click(function() {
+                $("#modal").fadeOut(200);
+            });
+            $("#formPembeli").submit(function(event) {
+                event.preventDefault();
+                const nama = $("#pNama").val().trim();
+                const alamat = $("#pAlamat").val().trim();
+                const hp = $("#pHp").val().trim();
+                // Bendera validasi
+                let valid = true;
+                $("#modal .error").hide();
+                if (nama.length < 3) {
+                    $("#errNama").text("Nama minimal 3 karakter!").show();
+                    valid = false;
+                }
+                if (alamat.length < 10) {
+                    $("#errAlamat").text("Alamat minimal 10 karakter!").show();
+                    valid = false;
+                }
+                if (hp.length < 10 || !$.isNumeric(hp)) {
+                    $("#errHp").text("No. HP harus angka, minimal 10 digit!").show();
+                    valid = false;
+                }
+                // Jika semua data benar
+                if (valid) {
+                    const qty = hitungQty();
+                    const total = updateCartUI();
+                    simpanRiwayat(total, qty);
+                    $("#notif")
+                        .text("Terima kasih, " + nama + "! Pesanan " + qty + " barang (" + rupiah(total) + ") akan dikirim.")
+                        .fadeIn()
+                        .delay(5000)
+                        .fadeOut();
+                    // Kosongkan keranjang, tutup modal, reset form
+                    cart = [];
+                    updateCartUI();
+                    tampilRiwayat();
+                    $("#formPembeli").trigger("reset");
+                    $("#modal").fadeOut(200);
+                }
+            });
+            // Tampilan awal
+            updateCartUI();
+            tampilRiwayat();
+        });
+    </script>
+</body>
+</html>
