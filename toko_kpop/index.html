@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Hallyu Haul - Toko Merchandise K-Pop</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div id="promo-bar">💜 GRATIS ONGKIR min. belanja Rp 300.000 &nbsp;|&nbsp; Pre-order album terbaru dibuka! <button id="close-promo">&times;</button></div>
+
+  <header>
+    <h1>Hallyu<span>Haul</span></h1>
+    <nav>
+      <a href="#produk">Produk</a>
+      <a href="#info">Info</a>
+      <a href="#pesan">Pesan</a>
+    </nav>
+  </header>
+
+  <section class="hero">
+    <div class="hero-inner">
+      <p class="tag" id="hero-tag">✨ OFFICIAL &amp; TRUSTED K-POP STORE</p>
+      <h2 id="hero-title">Koleksi Merch Bias Kamu, <em>Satu Klik Saja</em></h2>
+      <p id="hero-sub">Album, lightstick, photocard, hingga apparel. Original, aman, dan dikirim ke seluruh Indonesia.</p>
+      <a href="#pesan" class="btn" id="hero-btn">Pesan Sekarang 💜</a>
+    </div>
+  </section>
+
+  <section id="produk">
+    <h2 class="title">Produk <span>Terlaris</span></h2>
+    <div class="cards">
+      <div class="card"><div class="icon">💿</div><h3>Album Box Set</h3><p>Photobook, poster, dan photocard acak.</p><strong>Rp 350.000</strong></div>
+      <div class="card"><div class="icon">🪄</div><h3>Official Lightstick</h3><p>Terhubung Bluetooth, siap konser.</p><strong>Rp 550.000</strong></div>
+      <div class="card"><div class="icon">🃏</div><h3>Photocard Pack</h3><p>Set 8 kartu eksklusif + sleeve.</p><strong>Rp 85.000</strong></div>
+      <div class="card"><div class="icon">🧥</div><h3>Hoodie Fanmeeting</h3><p>Bahan fleece tebal, unisex.</p><strong>Rp 290.000</strong></div>
+    </div>
+  </section>
+
+  <section id="info">
+    <h2 class="title">Informasi <span>Toko</span></h2>
+    <ul class="tab-menu">
+      <li class="active" data-tab="tab-tentang">Tentang</li>
+      <li data-tab="tab-pengiriman">Pengiriman</li>
+      <li data-tab="tab-kontak">Kontak</li>
+    </ul>
+    <div class="tab-content" id="tab-tentang">Hallyu Haul didirikan oleh sesama fans. Semua produk dijamin original dan dikemas aman dengan bubble wrap ekstra.</div>
+    <div class="tab-content" id="tab-pengiriman" style="display:none">Pengiriman ke seluruh Indonesia, estimasi 2-5 hari kerja. Pre-order album estimasi 2-4 minggu.</div>
+    <div class="tab-content" id="tab-kontak" style="display:none">WhatsApp: 0812-3456-7890 &nbsp;|&nbsp; IG: @hallyuhaul.id &nbsp;|&nbsp; Email: halo@hallyuhaul.id</div>
+
+    <h3 id="faq-toggle">❓ Pertanyaan Umum (klik) ▾</h3>
+    <div id="faq-body" style="display:none">
+      <p><b>Apakah barang original?</b> Ya, 100% original dan bersumber dari distributor resmi.</p>
+      <p><b>Bisa request member photocard?</b> Tidak dijamin, karena photocard dikemas acak dari pabrik.</p>
+    </div>
+  </section>
+
+  <section id="pesan">
+    <h2 class="title">Form <span>Pemesanan</span></h2>
+    <form id="form-pesan" novalidate>
+      <label>Nama Lengkap <input type="text" name="nama" placeholder="Nama kamu"></label>
+      <label>Email <input type="email" name="email" placeholder="nama@email.com"></label>
+      <label>No. HP <input type="text" name="telepon" placeholder="08xxxxxxxxxx"></label>
+      <label>Produk
+        <select name="produk">
+          <option value="">-- Pilih produk --</option>
+          <option>Album Box Set</option>
+          <option>Official Lightstick</option>
+          <option>Photocard Pack</option>
+          <option>Hoodie Fanmeeting</option>
+        </select>
+      </label>
+      <label>Jumlah <input type="number" name="jumlah" placeholder="1"></label>
+      <label>Alamat Pengiriman <textarea name="alamat" rows="3" placeholder="Jalan, kota, kode pos"></textarea></label>
+      <label>Password Akun <input type="password" name="password" id="password"></label>
+      <label>Ulangi Password <input type="password" name="password2"></label>
+      <label class="check"><input type="checkbox" name="setuju"> Saya setuju dengan syarat &amp; ketentuan</label>
+      <button type="submit" class="btn">Kirim Pesanan 🚀</button>
+    </form>
+    <div id="sukses" style="display:none">🎉 Pesanan berhasil dikirim! Terima kasih, fighting!</div>
+  </section>
+
+  <footer>&copy; 2026 Hallyu Haul. Dibuat dengan 💜 untuk para fans.</footer>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+  <script src="main.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
