@@ -1,0 +1,122 @@
+/* ===== 1. Warna (tema pink) ===== */
+:root {
+ --latar: #fff0f6;
+ --kartu: #ffffff;
+ --teks: #3a1a2b;
+ --teks-pudar: #8a5a73;
+ --aksen: #c2185b;
+}
+
+body.gelap {
+ --latar: #1f0f17;
+ --kartu: #2d1822;
+ --teks: #fbe6ef;
+ --teks-pudar: #c99ab1;
+ --aksen: #f48fb1;
+}
+
+/* ===== 2. Dasar halaman ===== */
+* {
+ box-sizing: border-box;
+}
+
+body {
+ margin: 0;
+ font-family: Arial, sans-serif;
+ line-height: 1.6;
+ background: var(--latar);
+ color: var(--teks);
+}
+
+/* ===== 3. Bagian atas ===== */
+.header {
+ display: flex;
+ justify-content: space-between;
+ align-items: center;
+ padding: 16px 24px;
+}
+
+.logo {
+ margin: 0;
+ color: var(--aksen);
+}
+
+#tombol-tema {
+ padding: 8px 16px;
+ border: 2px solid var(--aksen);
+ border-radius: 20px;
+ background: transparent;
+ color: var(--aksen);
+ cursor: pointer;
+}
+
+/* ===== 4. Isi halaman ===== */
+.isi {
+ max-width: 900px;
+ margin: 0 auto;
+ padding: 0 24px 60px;
+}
+
+.perkenalan {
+ padding: 50px 0 20px;
+}
+
+.perkenalan h1 {
+ font-size: 2.6rem;
+ margin: 0 0 8px;
+}
+
+.perkenalan p {
+ color: var(--teks-pudar);
+ font-size: 1.1rem;
+ margin: 0;
+}
+
+/* ===== 5. Pencarian ===== */
+#cari {
+ width: 100%;
+ padding: 12px 16px;
+ margin: 8px 0 20px;
+ border: 1px solid var(--teks-pudar);
+ border-radius: 10px;
+ font-size: 1rem;
+ background: var(--kartu);
+ color: var(--teks);
+}
+
+/* ===== 6. Kartu proyek ===== */
+.daftar-proyek {
+ display: grid;
+ grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+ gap: 20px;
+}
+
+.kartu {
+ display: block;
+ padding: 24px;
+ background: var(--kartu);
+ border-radius: 14px;
+ box-shadow: 0 4px 14px rgba(194, 24, 91, 0.12);
+ color: inherit;
+ text-decoration: none;
+ transition: transform 0.2s;
+}
+
+.kartu:hover {
+ transform: translateY(-4px);
+}
+
+.kartu h3 {
+ margin: 0 0 6px;
+ color: var(--aksen);
+}
+
+.kartu p {
+ margin: 0;
+ color: var(--teks-pudar);
+}
+
+.pesan-kosong {
+ display: none;
+ color: var(--teks-pudar);
+}

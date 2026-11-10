@@ -1,0 +1,147 @@
+/* css/style.css: dimuat SETELAH bootstrap.min.css
+   Tema warna: PINK */
+
+:root {
+  --pink-900: #5a1236;
+  --pink-700: #c2185b;
+  --pink-500: #e91e8c;
+  --pink-300: #f48fb1;
+  --pink-100: #fde4ef;
+  --pink-50:  #fff5f9;
+}
+
+body {
+  background-color: var(--pink-50);
+}
+
+/* ---------- Navbar ---------- */
+.app-navbar {
+  height: 56px;
+  background: linear-gradient(90deg, var(--pink-700), var(--pink-500));
+  box-shadow: 0 2px 8px rgba(194, 24, 91, 0.35);
+}
+.brand-accent {
+  color: #ffe0ef;
+}
+
+/* ---------- Sidebar ---------- */
+.sidebar {
+  background-color: var(--pink-900);
+  width: 250px;
+  flex-shrink: 0;
+}
+@media (min-width: 992px) {
+  .sidebar {
+    min-height: calc(100vh - 56px);
+    position: sticky;
+    top: 56px;
+    align-self: flex-start;
+  }
+}
+.sidebar-title {
+  color: var(--pink-300);
+  font-size: 0.7rem;
+  letter-spacing: 1px;
+  margin-bottom: 0.5rem;
+}
+.sidebar .nav-link {
+  color: #f8d4e4;
+  border-radius: 8px;
+  margin-bottom: 2px;
+}
+.sidebar .nav-link i {
+  margin-right: 8px;
+}
+.sidebar .nav-link:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+  color: #fff;
+}
+.sidebar .nav-link.active {
+  background-color: var(--pink-500);
+  color: #fff;
+}
+
+/* ---------- Konten ---------- */
+.main-content {
+  min-width: 0; /* mencegah tabel melebarkan halaman di HP */
+}
+h1.h3 {
+  color: var(--pink-700);
+  font-weight: 700;
+}
+
+/* ---------- Tombol & badge pink ---------- */
+.btn-pink {
+  background-color: var(--pink-500);
+  border-color: var(--pink-500);
+  color: #fff;
+}
+.btn-pink:hover,
+.btn-pink:focus {
+  background-color: var(--pink-700);
+  border-color: var(--pink-700);
+  color: #fff;
+}
+.badge-pink {
+  background-color: var(--pink-500);
+}
+
+/* ---------- Card statistik ---------- */
+.stat-card {
+  border: 0;
+  border-radius: 12px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.stat-card:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 0.5rem 1rem rgba(233, 30, 140, 0.25) !important;
+}
+.stat-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #fff;
+  font-size: 1.6rem;
+  flex-shrink: 0;
+}
+.icon-pink    { background: linear-gradient(135deg, #f06292, #e91e8c); }
+.icon-rose    { background: linear-gradient(135deg, #f48fb1, #d81b60); }
+.icon-peach   { background: linear-gradient(135deg, #ffab91, #f06292); }
+.icon-fuchsia { background: linear-gradient(135deg, #ba68c8, #c2185b); }
+.stat-value {
+  font-size: 1.6rem;
+  font-weight: 700;
+  line-height: 1.1;
+  color: var(--pink-900);
+}
+
+/* ---------- Tabel ---------- */
+.table th {
+  white-space: nowrap;
+}
+.table-pink {
+  --bs-table-bg: var(--pink-700);
+  --bs-table-color: #fff;
+  --bs-table-border-color: var(--pink-500);
+}
+.table-striped > tbody > tr:nth-of-type(odd) > * {
+  --bs-table-accent-bg: var(--pink-50);
+}
+.table-hover > tbody > tr:hover > * {
+  --bs-table-accent-bg: var(--pink-100);
+}
+
+/* ---------- Modal ---------- */
+.modal-pink {
+  background: linear-gradient(90deg, var(--pink-700), var(--pink-500));
+}
+
+/* ---------- HP kecil ---------- */
+@media (max-width: 575.98px) {
+  .stat-value {
+    font-size: 1.4rem;
+  }
+}
